@@ -29,10 +29,56 @@ export const api = {
   },
   
   createSubModule: async (payload: Omit<SubModule, 'id'>) => {
-    const tenantId = await getTenantId();
-    const { data, error } = await supabase.from('sub_modules').insert([{ ...payload, tenant_id: tenantId }]).select().single();
-    if (error) throw error;
-    return data;
+    // Validate required fields
+    if (!payload.name || !payload.code) {
+      throw new Error('Missing required fields: name and code are required');
+    }
+    
+    // Normalize code to lowercase and replace spaces with underscores
+    const normalizedCode = payload.code.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
+    
+    // Prepare payload with all required fields
+    const insertPayload = {
+      name: payload.name,
+      code: normalizedCode,
+      main_module_id: payload.main_module_id || null,
+      description: payload.description || null,
+      icon: payload.icon || null,
+      display_name_singular: payload.display_name_singular || payload.name,
+      display_name_plural: payload.display_name_plural || (payload.name + 's'),
+      settings: payload.settings || {},
+      list_view_config: payload.list_view_config || { columns: [], filters: [] },
+      form_view_config: payload.form_view_config || {},
+      sort_order: 0
+    };
+    
+    try {
+      // Use backend API endpoint instead of direct Supabase call
+      // This ensures proper JWT claims (including tenant_id) are used for RLS enforcement
+      const response = await fetch('/api/v1/config/modules', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        },
+        body: JSON.stringify(insertPayload)
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        if (response.status === 409) {
+          throw new Error(`A module with code "${normalizedCode}" already exists in this tenant.`);
+        }
+        throw new Error(errorData.message || `Failed to create sub-module: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error: any) {
+      if (error.message.includes('unique') || error.message.includes('UNIQUE')) {
+        throw new Error(`A module with code "${normalizedCode}" already exists in this tenant.`);
+      }
+      throw error;
+    }
   },
 
   getFields: async (subModuleId: string): Promise<SubModuleField[]> => {

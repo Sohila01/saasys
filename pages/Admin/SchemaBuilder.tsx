@@ -58,24 +58,41 @@ const SchemaBuilderPage: React.FC = () => {
 
   const handleCreateModule = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newModuleName || !newModuleCode || !parentModuleId) return;
+    
+    if (!newModuleName || !newModuleCode || !parentModuleId) {
+      notificationService.notify('Incomplete Configuration', 'Please fill in all required fields: Module Name, Code, and Parent Module.', 'error');
+      return;
+    }
+    
+    // Validate module code format
+    if (!/^[a-zA-Z0-9_\s]+$/.test(newModuleCode)) {
+      notificationService.notify('Invalid Code Format', 'Module code can only contain letters, numbers, underscores, and spaces.', 'error');
+      return;
+    }
     
     try {
       const created = await api.createSubModule({
         name: newModuleName,
         code: newModuleCode,
         main_module_id: parentModuleId,
-        settings: {}
+        settings: {},
+        list_view_config: { columns: [], filters: [] },
+        form_view_config: {}
       });
+      
       await loadStructure();
       setSelectedSubModule(created.id);
       setShowNewModuleForm(false);
       setNewModuleName('');
       setNewModuleCode('');
-      notificationService.notify('New Module Initialized', `${newModuleName} protocol has been deployed.`, 'success');
+      setParentModuleId('');
+      
+      notificationService.notify('Module Created Successfully', `${newModuleName} has been added to your system.`, 'success');
       window.dispatchEvent(new Event('storage')); // Refresh sidebar
-    } catch (err) {
-      notificationService.notify('Initialization Error', 'The specified module code may already exist within this tenant.', 'error');
+    } catch (err: any) {
+      const errorMessage = err?.message || 'An unexpected error occurred while creating the module.';
+      notificationService.notify('Module Creation Failed', errorMessage, 'error');
+      console.error('Module creation error:', err);
     }
   };
 
