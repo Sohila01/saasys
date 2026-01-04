@@ -1,0 +1,12 @@
+/* Minimal stylesheet to satisfy production build and provide small overrides */
+/* Tailwind is loaded via CDN in index.html for now. For production, install Tailwind as a PostCSS plugin. */
+
+html,body,#root {
+  height: 100%;
+}
+
+/* basic fallback styles */
+body { margin: 0; }
+
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }

@@ -1,0 +1,15 @@
+runtime: node
+env: standard
+
+env_variables:
+  NODE_ENV: "production"
+  
+handlers:
+- url: /.*
+  script: auto
+
+# Add environment variables in app.yaml:
+# env_variables:
+#   SUPABASE_URL: "your-url"
+#   SUPABASE_SERVICE_KEY: "your-key"
+#   JWT_SECRET: "your-secret"
