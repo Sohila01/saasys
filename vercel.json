@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "env": {
+    "VITE_API_URL": {
+      "required": true
+    },
+    "VITE_SUPABASE_URL": {
+      "required": true
+    },
+    "VITE_SUPABASE_ANON_KEY": {
+      "required": true
+    }
+  },
+  "buildCommand": "npm install && npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite"
+}
