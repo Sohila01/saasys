@@ -1,19 +1,10 @@
 {
   "version": 2,
-  "env": [
-    {
-      "key": "VITE_API_URL",
-      "value": "https://nexus-saas-backend.up.railway.app/api"
-    },
-    {
-      "key": "VITE_SUPABASE_URL",
-      "value": "https://zupngmmhtpnkyxcjhnoo.supabase.co"
-    },
-    {
-      "key": "VITE_SUPABASE_ANON_KEY",
-      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1cG5nbW1odHBua3l4Y2pobm9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc1MTMxNTAsImV4cCI6MjA4MzA4OTE1MH0.IL2FxjVD5bJ6JUBDP2ZPBaWxZ6L6B206ovEpbhUIilg"
-    }
-  ],
+  "env": {
+    "VITE_API_URL": "@vite_api_url",
+    "VITE_SUPABASE_URL": "@vite_supabase_url",
+    "VITE_SUPABASE_ANON_KEY": "@vite_supabase_anon_key"
+  },
   "buildCommand": "npm install && npm run build",
   "outputDirectory": "dist",
   "framework": "vite"
