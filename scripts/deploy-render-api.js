@@ -3,7 +3,7 @@
 import https from 'https';
 import fs from 'fs';
 
-const RENDER_TOKEN = 're_Td6pXdjK_GnmMCMUgUJh3SLiHqFJKJX32';
+const RENDER_TOKEN = 'rnd_U4njDwWnWGQ7ArjRKfdnK9ZsQC4Q';
 
 function makeRequest(method, path, data = null) {
   return new Promise((resolve, reject) => {
