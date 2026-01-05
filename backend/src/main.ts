@@ -10,9 +10,13 @@ async function bootstrap() {
 
   // Security
   app.use(helmet());
+  
+  // CORS Configuration - Allow all origins for now, refine later
   app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: true, // Allow all origins during development
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }));
 
   // Validation
