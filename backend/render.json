@@ -1,0 +1,45 @@
+{
+  "name": "Nexus SaaS Backend",
+  "description": "Production-ready Multi-tenant SaaS Backend",
+  "repository": "https://github.com/Sohila01/saasys",
+  "keywords": ["nestjs", "saas", "multitenant", "supabase"],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "env": {
+    "NODE_ENV": {
+      "description": "Node environment",
+      "value": "production"
+    },
+    "PORT": {
+      "description": "Server port",
+      "value": "3000"
+    },
+    "SUPABASE_URL": {
+      "description": "Supabase project URL",
+      "value": "https://zupngmmhtpnkyxcjhnoo.supabase.co"
+    },
+    "SUPABASE_SERVICE_KEY": {
+      "description": "Supabase service role key",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1cG5nbW1odHBua3l4Y2pobm9vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NzUxMzE1MCwiZXhwIjoyMDgzMDg5MTUwfQ.e06IEV-VLyYUWCD-SGnfOwF-mIAUJKgK5A4A_pVnxz4"
+    },
+    "SUPABASE_ANON_KEY": {
+      "description": "Supabase anonymous key",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp1cG5nbW1odHBua3l4Y2pobm9vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc1MTMxNTAsImV4cCI6MjA4MzA4OTE1MH0.IL2FxjVD5bJ6JUBDP2ZPBaWxZ6L6B206ovEpbhUIilg"
+    },
+    "JWT_SECRET": {
+      "description": "JWT secret key",
+      "value": "nexus-saas-platform-production-jwt-secret-2024-highly-secure-key"
+    },
+    "JWT_EXPIRATION": {
+      "description": "JWT expiration time",
+      "value": "7d"
+    },
+    "FRONTEND_URL": {
+      "description": "Frontend URL for CORS",
+      "value": "https://nexus-saas-platform.vercel.app"
+    }
+  }
+}
