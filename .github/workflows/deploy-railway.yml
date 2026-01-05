@@ -1,0 +1,24 @@
+name: Deploy Backend to Railway
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/deploy-railway.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Deploy Backend to Railway
+      run: |
+        npm install -g @railway/cli
+        cd backend
+        railway up --service nexus-backend
+      env:
+        RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
